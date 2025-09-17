@@ -14,4 +14,5 @@ public class Filme
     [Required(ErrorMessage = "O gênero do filme é obrigatório")]
     [MaxLength(50, ErrorMessage = "O gênero não pode ter mais de 50 caracteres")]
     public string Genero { get; set; }
+    public int Id { get; internal set; }
 }
