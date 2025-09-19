@@ -9,6 +9,7 @@ public class FilmeProfile : Profile
     {
         CreateMap<CreateFilmeDto, Filme>();
         CreateMap<Filme, ReadFilmeDto>();
-        CreateMap<IEnumerable<Filme>, IEnumerable<ReadFilmeDto>>();
+        CreateMap<Filme, UpdateFilmeDto>();
+        CreateMap<UpdateFilmeDto, Filme>();
     }
 }
