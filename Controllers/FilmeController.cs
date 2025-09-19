@@ -43,6 +43,8 @@ public class FilmeController : ControllerBase
 
         if (filmes.Count() == 0) return NoContent();
 
+        var filmesMapeados = _mapper.Map<IEnumerable<ReadFilmeDto>>(filmes);
+
         return Ok(filmes.Skip(skip).Take(take));
     }
 
@@ -53,6 +55,8 @@ public class FilmeController : ControllerBase
 
         if (filme == null) return NotFound();
 
-        return Ok(filme);
+        var filmeMapeado = _mapper.Map<ReadFilmeDto>(filme);
+
+        return Ok(filmeMapeado);
     }
 }
