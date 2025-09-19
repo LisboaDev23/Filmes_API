@@ -1,5 +1,7 @@
-﻿using FilmesApi.Data;
-using FilmesApi.Models;
+﻿using AutoMapper;
+using FilmesApi.Data.Context;
+using FilmesApi.Data.Dtos;
+using FilmesApi.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmesApi.Controllers;
@@ -10,22 +12,27 @@ public class FilmeController : ControllerBase
 {
     private FilmeContext _context;
     private ILogger<FilmeController> _logger;
+    private IMapper _mapper;
 
-    public FilmeController(ILogger<FilmeController> logger, FilmeContext context)
+    public FilmeController(ILogger<FilmeController> logger, FilmeContext context, IMapper mapper)
     {
         _logger = logger;
         _context = context;
+        _mapper = mapper;
     }
 
     [HttpPost("adicionar-filme")]
-    public IActionResult AdicionaFilme([FromBody] Filme filme)
+    public IActionResult AdicionaFilme([FromBody] CreateFilmeDto filmeDto)
     {
+        
+        Filme filme = _mapper.Map<Filme>(filmeDto);
+
         _context.Filmes.Add(filme);
         _context.SaveChanges();
 
-        _logger.LogInformation($"Filme {filme.Titulo} adicionado com sucesso.");
+        _logger.LogInformation($"Filme {filmeDto.Titulo} adicionado com sucesso.");
 
-        return CreatedAtAction(nameof(BuscarFilmePorId), new { id = filme.Id }, filme);
+        return CreatedAtAction(nameof(BuscarFilmePorId), new { id = filme.Id }, filmeDto);
     }
 
     [HttpGet("listar-filmes")]
