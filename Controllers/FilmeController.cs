@@ -23,6 +23,7 @@ public class FilmeController : ControllerBase
     }
 
     [HttpPost("adicionar-filme")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult AdicionaFilme([FromBody] CreateFilmeDto filmeDto)
     {
         
@@ -37,6 +38,7 @@ public class FilmeController : ControllerBase
     }
 
     [HttpGet("listar-filmes")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult ListarFilmes([FromQuery] int skip = 0,
         [FromQuery] int take = 50)
     {
@@ -54,6 +56,7 @@ public class FilmeController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult? BuscarFilmePorId(int id)
     {
         var filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
@@ -72,6 +75,7 @@ public class FilmeController : ControllerBase
     }
 
     [HttpPut("atualizar-filme/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult AtualizarFilme(int id, [FromBody] UpdateFilmeDto filmeDto)
     {
         var filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
@@ -85,7 +89,8 @@ public class FilmeController : ControllerBase
         return Ok("Filme atualizado com sucesso!");
     }
 
-    [HttpPatch]
+    [HttpPatch("atuliza-filme-parcial")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public IActionResult AtualizaFilmeParcial(int id, JsonPatchDocument<UpdateFilmeDto> patch)
     {
         var filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
@@ -113,6 +118,7 @@ public class FilmeController : ControllerBase
     }
 
     [HttpDelete("deletar-filme/{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public IActionResult DeletarFilme(int id)
     {
         var filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
